@@ -2,117 +2,113 @@
 <html lang="id">
 <head>
   <meta charset="utf-8">
-  <title>Form Order - SuruhBoy</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+  <title>Cek Ongkir - SuruhBoy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
-    body { font-family: system-ui, sans-serif; background: #f4f5f7; padding: 20px; }
-    .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px #0001; max-width: 600px; margin: auto; }
-    .result-card { margin-top: 20px; padding: 20px; border-radius: 12px; background: #fff; box-shadow: 0 0 10px #0002; display: none; }
-    .btn { display: block; width: 100%; padding: 14px; margin-top: 10px; border-radius: 8px; text-align: center; text-decoration: none; color: white; background: #007bff; font-weight: bold; cursor: pointer; }
-    #copyBtn { background: #28a745; border: none; }
-    pre { white-space: pre-wrap; background: #f0f2f4; padding: 15px; border-radius: 10px; border: 1px solid #e3e6e8; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f4f5f7;
+      padding: 20px;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      max-width: 420px;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.1);
+    }
+    h1 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    label {
+      font-size: 14px;
+      display: block;
+      margin-top: 12px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 16px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #111;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 16px;
+      background: #f0f0f0;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
   </style>
 </head>
 
 <body>
 
 <div class="card">
-  <h2>Form Order</h2>
+  <h1>🚚 Cek Ongkir SuruhBoy</h1>
 
-  <form id="orderForm">
-    <label>Biaya</label>
-    <input name="biaya" required>
+  <label>Lokasi Jemput</label>
+  <input id="from" placeholder="Contoh: Boyolali">
 
-    <label>Kapan</label>
-    <input name="kapan" required>
+  <label>Lokasi Tujuan</label>
+  <input id="to" placeholder="Contoh: Solo">
 
-    <label>Nama</label>
-    <input name="nama" required>
+  <button onclick="hitungOngkir()">Cek Ongkir</button>
 
-    <label>No HP</label>
-    <input name="hp" required>
-
-    <label>Deskripsi</label>
-    <textarea name="deskripsi"></textarea>
-
-    <label>Jemput</label>
-    <input name="jemput">
-
-    <label>Antar</label>
-    <input name="antar">
-
-    <label>Agent</label>
-    <input name="agent">
-
-    <button class="btn" type="submit">SUBMIT</button>
-  </form>
-</div>
-
-<!-- HASIL TEMPLATE -->
-<div class="result-card" id="resultCard">
-  <h2>🟦 ORDER MASUK</h2>
-  <pre id="templateBox"></pre>
-  <button id="copyBtn" class="btn">COPY TEMPLATE</button>
-  <a id="chatBtn" class="btn" target="_blank">CHAT KE AGENT</a>
+  <div id="hasil" class="result" style="display:none;"></div>
 </div>
 
 <script>
-const SCRIPT_URL = "PASTE_URL_WEB_APP_SCRIPT_KAMU";
+  const API_KEY = "ISI_API_KEY_KAMU";
 
-document.getElementById("orderForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
+  const TARIF_PER_KM = 2000;
+  const BASE_FEE = 5000;
 
-  const form = new FormData(this);
+  async function hitungOngkir() {
+    const from = document.getElementById("from").value;
+    const to = document.getElementById("to").value;
 
-  // Submit ke Apps Script
-  await fetch(SCRIPT_URL, { method: "POST", body: form });
+    if (!from || !to) {
+      alert("Lengkapi lokasi dulu");
+      return;
+    }
 
-  // Buat template
-  const template = `
-🟦 ORDER MASUK
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(from)}&destinations=${encodeURIComponent(to)}&key=${API_KEY}`;
 
-📦 Biaya: ${form.get("biaya")}
-📅 Kapan: ${form.get("kapan")}
-👤 Nama: ${form.get("nama")}
-📱 https://wa.me/${form.get("hp")}
-📝 Deskripsi: ${form.get("deskripsi") || "-"}
+    try {
+      const res = await fetch(`https://corsproxy.io/?${url}`);
+      const data = await res.json();
 
-📍 Jemput: ${form.get("jemput") || "-"}
-📍 Antar: ${form.get("antar") || "-"}
+      const meters = data.rows[0].elements[0].distance.value;
+      const km = meters / 1000;
 
-🧑‍💼 Agent: ${form.get("agent")}`.trim();
+      const ongkir = Math.round(km * TARIF_PER_KM + BASE_FEE);
 
-  // Tampilkan template
-  document.getElementById("templateBox").textContent = template;
-  document.getElementById("resultCard").style.display = "block";
-
-  // Link ke grup
-  document.getElementById("chatBtn").href =
-    "https://chat.whatsapp.com/DlIfRxaICuRCXc1ZndEDTc";
-
-  // Reset form
-  this.reset();
-});
-
-// Tombol copy
-document.getElementById("copyBtn").addEventListener("click", async () => {
-  try {
-    await navigator.clipboard.writeText(
-      document.getElementById("templateBox").textContent
-    );
-    copyBtn.textContent = "✔ TERSALIN!";
-    copyBtn.style.background = "#1e7c33";
-
-    setTimeout(() => {
-      copyBtn.textContent = "COPY TEMPLATE";
-      copyBtn.style.background = "#28a745";
-    }, 1500);
-  } catch (err) {
-    alert("Gagal menyalin!");
+      document.getElementById("hasil").style.display = "block";
+      document.getElementById("hasil").innerHTML = `
+        <b>Jarak:</b> ${km.toFixed(1)} km<br>
+        <b>Ongkir:</b> Rp ${ongkir.toLocaleString("id-ID")}
+      `;
+    } catch (err) {
+      alert("Gagal hitung jarak");
+      console.error(err);
+    }
   }
-});
 </script>
+
 </body>
 </html>
