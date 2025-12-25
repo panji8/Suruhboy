@@ -1,114 +1,105 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <title>Cek Ongkir - SuruhBoy</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      background: #f4f5f7;
-      padding: 20px;
-    }
-    .card {
-      background: #fff;
-      padding: 20px;
-      max-width: 420px;
-      margin: auto;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.1);
-    }
-    h1 {
-      font-size: 20px;
-      margin-bottom: 16px;
-    }
-    label {
-      font-size: 14px;
-      display: block;
-      margin-top: 12px;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-    button {
-      margin-top: 16px;
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      background: #111;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .result {
-      margin-top: 16px;
-      background: #f0f0f0;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan Suruh</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+    <div class="container">
+        <!-- Search Bar -->
+        <div class="search-section">
+            <input type="text" placeholder="Punya pertanyaan?" class="search-input">
+        </div>
 
-<div class="card">
-  <h1>🚚 Cek Ongkir SuruhBoy</h1>
+        <!-- Main Title -->
+        <h1 class="main-title">Semua kebutuhanmu, tinggal suruh</h1>
 
-  <label>Lokasi Jemput</label>
-  <input id="from" placeholder="Contoh: Boyolali">
+        <!-- Service Buttons Grid -->
+        <div class="services-grid">
+            <button class="service-btn">
+                <div class="icon-circle">
+                    <svg class="icon" fill="white" width="28" height="28" viewBox="0 0 24 24">
+                        <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
+                    </svg>
+                </div>
+                <span>Antar Makanan</span>
+            </button>
 
-  <label>Lokasi Tujuan</label>
-  <input id="to" placeholder="Contoh: Solo">
+            <button class="service-btn">
+                <div class="icon-circle">
+                    <svg class="icon" fill="white" width="28" height="28" viewBox="0 0 24 24">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z"/>
+                    </svg>
+                </div>
+                <span>Kirim Barang</span>
+            </button>
 
-  <button onclick="hitungOngkir()">Cek Ongkir</button>
+            <button class="service-btn">
+                <div class="icon-circle">
+                    <svg class="icon" fill="white" width="28" height="28" viewBox="0 0 24 24">
+                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+                </div>
+                <span>Titip Beli</span>
+            </button>
 
-  <div id="hasil" class="result" style="display:none;"></div>
-</div>
+            <button class="service-btn">
+                <div class="icon-circle">
+                    <svg class="icon" fill="white" width="28" height="28" viewBox="0 0 24 24">
+                        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                    </svg>
+                </div>
+                <span>Dokumen & Urusan Cepat</span>
+            </button>
+        </div>
 
-<script>
-  const API_KEY = "ISI_API_KEY_KAMU";
+        <!-- Other Services Button -->
+        <button class="other-services-btn">Suruh Lain</button>
 
-  const TARIF_PER_KM = 2000;
-  const BASE_FEE = 5000;
+        <!-- Check Availability Section 1 -->
+        <div class="availability-section">
+            <h2 class="section-title">Cek ketersediaan wilayah</h2>
+            <div class="input-group">
+                <input type="text" placeholder="Masukkan kecamatan atau kelurahan" class="location-input">
+                <button class="check-btn">Cek</button>
+            </div>
+        </div>
 
-  async function hitungOngkir() {
-    const from = document.getElementById("from").value;
-    const to = document.getElementById("to").value;
+        <!-- Check Availability Section 2 -->
+        <div class="availability-section">
+            <h2 class="section-title">Cek ketersediaan wilayah</h2>
+            <div class="select-group">
+                <select class="location-select">
+                    <option>Pilih Kecamatan</option>
+                    <option>Jakarta Pusat</option>
+                    <option>Jakarta Selatan</option>
+                    <option>Jakarta Barat</option>
+                    <option>Jakarta Timur</option>
+                    <option>Jakarta Utara</option>
+                </select>
+                <svg class="location-icon" fill="#003d82" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+            </div>
+        </div>
 
-    if (!from || !to) {
-      alert("Lengkapi lokasi dulu");
-      return;
-    }
-
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(from)}&destinations=${encodeURIComponent(to)}&key=${API_KEY}`;
-
-    try {
-      const res = await fetch(`https://corsproxy.io/?${url}`);
-      const data = await res.json();
-
-      const meters = data.rows[0].elements[0].distance.value;
-      const km = meters / 1000;
-
-      const ongkir = Math.round(km * TARIF_PER_KM + BASE_FEE);
-
-      document.getElementById("hasil").style.display = "block";
-      document.getElementById("hasil").innerHTML = `
-        <b>Jarak:</b> ${km.toFixed(1)} km<br>
-        <b>Ongkir:</b> Rp ${ongkir.toLocaleString("id-ID")}
-      `;
-    } catch (err) {
-      alert("Gagal hitung jarak");
-      console.error(err);
-    }
-  }
-</script>
-
+        <!-- Testimonials Section -->
+        <div class="testimonials-section">
+            <h2 class="section-title">Testimoni</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-avatar">
+                    <img src="https://placehold.co/80x80?text=Happy+customer+smiling+woman+with+brown+hair" alt="Happy customer smiling woman with brown hair">
+                </div>
+                <div class="testimonial-avatar">
+                    <img src="https://placehold.co/80x80?text=Satisfied+male+customer+with+beard" alt="Satisfied male customer with beard">
+                </div>
+                <div class="testimonial-avatar">
+                    <img src="https://placehold.co/80x80?text=Professional+woman+customer+with+glasses" alt="Professional woman customer with glasses">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
