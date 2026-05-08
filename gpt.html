@@ -1,0 +1,239 @@
+// Replace YOUR_GOOGLE_MAPS_API_KEY with your real API key later
+// Example integration:
+// <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAddVJN10IxegV8dNkN1w4oxFBF88TAMNs&libraries=places"></script>
+
+export default function SuruhBoyMapsUI() {
+  return (
+    <div className="w-full h-screen bg-[#081224] text-white overflow-hidden relative flex flex-col">
+      {/* MAP BACKGROUND */}
+      <div className="absolute inset-0 bg-[#0a2269]">
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
+          }}
+        />
+      </div>
+
+      {/* COVERAGE AREA */}
+      <div className="absolute top-[18%] left-[28%] w-[300px] h-[300px] bg-green-500/20 blur-3xl rounded-full" />
+      <div className="absolute top-[45%] left-[55%] w-[260px] h-[260px] bg-orange-500/20 blur-3xl rounded-full" />
+
+      {/* TOP NAVBAR */}
+      <div className="absolute top-3 md:top-5 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-[1400px] bg-[#10192d]/90 backdrop-blur-2xl border border-white/10 rounded-[26px] md:rounded-[32px] px-4 md:px-6 py-4 flex flex-col md:flex-row gap-4 md:gap-0 md:items-center justify-between shadow-2xl">
+        <div>
+          <h1 className="text-2xl font-black tracking-tight">
+            SURUH<span className="text-[#fe7f2d]">BOY</span>
+          </h1>
+          <p className="text-sm text-white/40 mt-1">
+            Realtime delivery coverage map
+          </p>
+        </div>
+
+        <div className="w-full md:flex-1 md:max-w-[650px] md:mx-10 relative">
+          <input
+            placeholder="Mau dianter apa hari ini?"
+            className="w-full bg-white/5 border border-white/10 rounded-[24px] px-6 py-5 outline-none placeholder:text-white/30 focus:border-[#fe7f2d] transition-all"
+          />
+
+          <button className="absolute right-2 top-1/2 -translate-y-1/2 px-4 md:px-6 py-3 rounded-2xl bg-[#fe7f2d] font-bold hover:scale-105 transition-all text-sm md:text-base">
+            Cari
+          </button>
+        </div>
+
+        <div className="hidden md:flex items-center gap-3">
+          <button className="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all">
+            Agent Area
+          </button>
+
+          <button className="px-5 py-3 rounded-2xl bg-[#fe7f2d] font-semibold shadow-lg shadow-orange-500/20">
+            Order Now
+          </button>
+        </div>
+      </div>
+
+      {/* LEFT SIDEBAR */}
+      <div className="absolute top-[145px] md:top-[110px] left-3 md:left-5 bottom-[95px] md:bottom-5 w-[calc(100%-24px)] md:w-[360px] bg-[#10192d]/92 backdrop-blur-2xl border border-white/10 rounded-[34px] overflow-hidden shadow-2xl flex flex-col z-40">
+        <div className="p-6 border-b border-white/10">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-bold">Agent Nearby</h2>
+              <p className="text-sm text-white/40 mt-1">
+                Area aktif sekarang
+              </p>
+            </div>
+
+            <div className="w-12 h-12 rounded-2xl bg-green-500/20 border border-green-400/20 flex items-center justify-center text-green-400 font-bold">
+              12
+            </div>
+          </div>
+        </div>
+
+        <div className="px-5 pt-5 flex gap-3 overflow-x-auto no-scrollbar">
+          {[
+            '🔥 Ramai',
+            '🌙 Malam',
+            '☕ Cafe',
+            '🍜 Warmindo',
+            '⚡ Fast',
+          ].map((item) => (
+            <button
+              key={item}
+              className="whitespace-nowrap px-4 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-[#fe7f2d] hover:border-[#fe7f2d] transition-all text-sm"
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex-1 overflow-y-auto px-5 py-5 space-y-4">
+          {[1, 2, 3].map((item) => (
+            <div
+              key={item}
+              className="bg-white/5 border border-white/10 rounded-[28px] overflow-hidden hover:border-[#fe7f2d]/40 transition-all"
+            >
+              <div className="h-36 bg-gradient-to-br from-[#fe7f2d]/80 to-[#0a2269] relative p-5 flex flex-col justify-between">
+                <div className="flex items-start justify-between">
+                  <div className="px-3 py-1 rounded-full bg-black/30 backdrop-blur-md text-xs">
+                    ⚡ 8 Menit
+                  </div>
+
+                  <div className="px-3 py-1 rounded-full bg-green-500/20 text-green-300 text-xs border border-green-400/20">
+                    Agent Ready
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-bold">Ayam Geprek {item}</h3>
+                  <p className="text-sm text-white/70 mt-1">
+                    Boyolali Kota • Buka sekarang
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-white/50">
+                    Ramai dipesan malam ini
+                  </p>
+                </div>
+
+                <button className="px-5 py-3 rounded-2xl bg-[#fe7f2d] font-semibold hover:scale-105 transition-all">
+                  Pesan
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* MAP PINS */}
+      <div className="absolute top-[38%] md:top-[34%] left-[52%] md:left-[45%] z-20 group cursor-pointer">
+        <div className="w-20 h-20 rounded-[28px] bg-[#fe7f2d] flex items-center justify-center text-3xl shadow-2xl shadow-orange-500/30 hover:scale-110 transition-all">
+          🍜
+        </div>
+
+        <div className="absolute top-24 left-1/2 -translate-x-1/2 w-[320px] bg-[#10192d]/95 border border-white/10 backdrop-blur-2xl rounded-[30px] p-5 opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-2xl">
+          <div className="flex items-start justify-between">
+            <div>
+              <h2 className="text-xl font-bold">Warmindo Malam</h2>
+              <p className="text-sm text-white/50 mt-1">
+                1.2 km • Open Now
+              </p>
+            </div>
+
+            <div className="text-[#fe7f2d] font-bold text-lg">
+              4.9
+            </div>
+          </div>
+
+          <div className="mt-5 grid grid-cols-2 gap-3">
+            <button className="py-4 rounded-2xl bg-[#fe7f2d] font-semibold hover:scale-[1.03] transition-all">
+              Pesan SuruhBoy
+            </button>
+
+            <button className="py-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all">
+              Navigasi
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute top-[56%] left-[64%] z-20">
+        <div className="w-16 h-16 rounded-[24px] bg-red-500 flex items-center justify-center text-2xl shadow-2xl shadow-red-500/30 hover:scale-110 transition-all cursor-pointer">
+          🍔
+        </div>
+      </div>
+
+      <div className="absolute top-[60%] left-[40%] z-20">
+        <div className="w-16 h-16 rounded-[24px] bg-green-500 flex items-center justify-center text-2xl shadow-2xl shadow-green-500/30 hover:scale-110 transition-all cursor-pointer">
+          ☕
+        </div>
+      </div>
+
+      {/* FLOATING STATS */}
+      <div className="hidden md:block absolute right-5 bottom-5 w-[320px] bg-[#10192d]/92 backdrop-blur-2xl border border-white/10 rounded-[34px] p-6 shadow-2xl z-40">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-white/40 text-sm">Realtime Status</p>
+            <h2 className="text-3xl font-black mt-1">24 Agent</h2>
+          </div>
+
+          <div className="w-16 h-16 rounded-[24px] bg-[#fe7f2d] flex items-center justify-center text-3xl shadow-lg shadow-orange-500/20">
+            🛵
+          </div>
+        </div>
+
+        <div className="mt-6 space-y-4">
+          <div>
+            <div className="flex items-center justify-between text-sm mb-2 text-white/50">
+              <span>Boyolali Kota</span>
+              <span>84%</span>
+            </div>
+
+            <div className="h-3 bg-white/5 rounded-full overflow-hidden">
+              <div className="h-full w-[84%] bg-[#fe7f2d] rounded-full" />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between text-sm mb-2 text-white/50">
+              <span>Kartosuro</span>
+              <span>61%</span>
+            </div>
+
+            <div className="h-3 bg-white/5 rounded-full overflow-hidden">
+              <div className="h-full w-[61%] bg-green-500 rounded-full" />
+            </div>
+          </div>
+        </div>
+
+        <button className="mt-6 w-full py-5 rounded-[24px] bg-[#fe7f2d] text-lg font-bold hover:scale-[1.02] transition-all shadow-xl shadow-orange-500/20">
+          Buat Pesanan Sekarang
+        </button>
+      </div>
+
+      {/* MOBILE STYLE BOTTOM NAV */}
+      <div className="absolute bottom-3 md:bottom-5 left-1/2 -translate-x-1/2 w-[95%] md:w-auto bg-[#10192d]/92 backdrop-blur-2xl border border-white/10 rounded-[30px] px-4 md:px-8 py-4 md:py-5 flex items-center justify-between md:justify-center gap-4 md:gap-10 shadow-2xl z-50">
+        {[
+          ['🗺️', 'Map'],
+          ['🔥', 'Trending'],
+          ['🛵', 'Agent'],
+          ['❤️', 'Favorite'],
+          ['👤', 'Profile'],
+        ].map(([icon, label]) => (
+          <button
+            key={label}
+            className="flex flex-col items-center text-white/60 hover:text-white transition-all"
+          >
+            <span className="text-2xl">{icon}</span>
+            <span className="text-sm mt-1">{label}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
